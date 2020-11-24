@@ -1,0 +1,44 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    //gradle sdk 使用项目中指定的gradle wrapper版本，插件中使用的Project对象等等就来自这里
+    implementation gradleApi()
+    //groovy sdk 使用本地的groovy
+//    implementation localGroovy()
+    //Android编译的大部分gradle源码，比如上面讲到的TaskManager
+    implementation 'com.android.tools.build:gradle:3.1.4'
+    //这个依赖里其实主要存了transform的依赖，注意，这个依赖不同于上面的gradleApi()
+    implementation 'com.android.tools.build:gradle-api:3.1.4'
+
+    //ASM相关
+    implementation 'org.ow2.asm:asm:5.1'
+    implementation 'org.ow2.asm:asm-util:5.1'
+    implementation 'org.ow2.asm:asm-commons:5.1'
+}
+
+//解决控件台中文乱码问题
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+}
+
+//group和version在后面使用自定义插件的时候会用到
+group='com.harry.plugin'
+version='1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+            // repository(url: "http://www.xxx.com/repos") {
+            //    authentication(userName: "admin", password: "admin")
+            // }
+            //本地的Maven地址设置为D:/repos
+            repository(url: uri('D:/repos'))
+        }
+    }
+}

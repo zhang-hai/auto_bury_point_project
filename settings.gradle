@@ -1,0 +1,1 @@
+include ':app', ':custom_gradle_plugin', ':buildSrc', ':sxw_burypoint_api', ':sxw_burypoint_plugin', ':lib_bury_module'
